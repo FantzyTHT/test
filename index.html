@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Source Tool</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #111;
+            color: #0f0;
+            padding: 20px;
+        }
+        input, button {
+            font-size: 16px;
+            padding: 6px;
+            margin-top: 10px;
+        }
+        #output {
+            white-space: pre-wrap;
+            margin-top: 20px;
+            border-top: 1px solid #0f0;
+            padding-top: 10px;
+            max-height: 500px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h2>View Page Source</h2>
+
+<input type="text" id="urlInput" placeholder="Enter URL (https://...)" size="60">
+<button onclick="getSource()">Fetch</button>
+
+<div id="output">Source will appear here...</div>
+
+<script>
+function getSource() {
+    const url = document.getElementById("urlInput").value;
+    const output = document.getElementById("output");
+
+    if (!url.startsWith("http")) {
+        output.textContent = "Please enter a valid URL starting with http/https.";
+        return;
+    }
+
+    output.textContent = "Loading...";
+
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            output.textContent = data;
+        })
+        .catch(err => {
+            output.textContent = "Error: " + err;
+        });
+}
+</script>
+
+</body>
+</html>
