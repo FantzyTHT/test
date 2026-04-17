@@ -39,14 +39,9 @@ function getSource() {
     const url = document.getElementById("urlInput").value;
     const output = document.getElementById("output");
 
-    if (!url.startsWith("http")) {
-        output.textContent = "Please enter a valid URL starting with http/https.";
-        return;
-    }
-
     output.textContent = "Loading...";
 
-    fetch(url)
+    fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url))
         .then(response => response.text())
         .then(data => {
             output.textContent = data;
